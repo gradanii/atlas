@@ -1,4 +1,4 @@
-#include "engine.h"
+#include "include/engine.h"
 
 bool neuron(uint8_t byte, uint8_t weight, uint8_t threshold)
 {
