@@ -1,4 +1,4 @@
-#include "include/engine.h"
+#include "../include/engine.h"
 
 bool neuron(uint8_t byte, uint8_t weight, uint8_t threshold)
 {
@@ -36,29 +36,22 @@ bool** forward
 	return arr;
 }
 
-int main()
+bool* predict(bool** inputs, uint8_t n_layers, uint8_t n_neurons)
 {
-	uint8_t inputs[] = {1, 0, 1}; 
+	uint8_t *arr = (uint8_t*)calloc(n_layers, sizeof(uint8_t));
 
-	uint8_t weights[2][3] = {
-	  {1, 0, 1}, 
-		{0, 1, 1} 
-	};
-
-	uint8_t thresholds[2][3] = {
-		{1, 1, 2}, 
-		{1, 0, 0} 
-	};
-
-	uint8_t n_neurons = 3;
-
-	uint8_t n_layers = 2;
-
-	bool** arr = forward(inputs, n_neurons, n_layers, weights, thresholds);
-
-	for (int i = 0; i < 2; ++i)
+	uint8_t max_activation = arr[0];
+	bool* output = inputs[0];
+	for (int i = 0; i < n_layers; ++i)
 	{
-		for (int j = 0; j < 3; ++j) { printf("%d ", arr[i][j]); }
-		printf("\n");
+		arr[i] = 0;
+		for (int j = 0; j < n_neurons; ++j)
+		{
+			arr[i] += inputs[i][j];
+		}
+		if (arr[i] > max_activation) { max_activation = arr[i]; output = inputs[i]; }
 	}
+
+	free(arr);
+	return output;
 }
