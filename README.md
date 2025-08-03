@@ -1,2 +1,3 @@
-# bareml
-Inference Engine for Binary Neural Networks
+<p align="center">
+  <img src="assets/logo.png" width="400">
+</p>
