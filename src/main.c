@@ -1,4 +1,4 @@
-#include "src/neuron.c"
+#include "neuron.c"
 
 int main()
 {
