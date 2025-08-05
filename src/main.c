@@ -1,4 +1,5 @@
 #include "neuron.c"
+#include "bareml/typing/binary.h"
 
 int main()
 {
@@ -27,4 +28,10 @@ int main()
 		printf("%hhu", prediction[i]);
 	}
 	printf("\n");
+
+	bool ins[] = {1, 0, 1};
+
+	uint8_t* packed = tensor_1d(ins, n_neurons);
+
+	for (int i = 0; i < 1; ++i) printf("%hhu\n", packed[i]);
 }

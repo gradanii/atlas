@@ -27,13 +27,13 @@ uint8_t xnor_dot_vector(uint8_t vec1[], size_t len1, uint8_t vec2[], size_t len2
 
 	arr = (uint8_t*)calloc(size, sizeof(uint8_t));
 
-	for (int i = 0; i < size; ++i)
+	for (size_t i = 0; i < size; ++i)
 	{
 		arr[i] = ~(vec1[i] ^ vec2[i]);
 	}
 
-	uint8_t final_popcount;
-	for (int i = 0; i < size; ++i)
+	uint8_t final_popcount = 0;
+	for (size_t i = 0; i < size; ++i)
 	{
 		final_popcount += popcount(arr[i]);
 	}
