@@ -23,7 +23,7 @@ bool* layer(uint8_t input, uint8_t* weights, uint8_t* thresholds, uint8_t n_neur
 }
 
 bool** forward
-(uint8_t* inputs, uint8_t n_neurons, uint8_t n_layers, uint8_t weights[n_neurons][n_layers], uint8_t thresholds[n_neurons][n_layers])
+(uint8_t* inputs, uint8_t n_neurons, uint8_t n_layers, uint8_t** weights, uint8_t** thresholds)
 {
 	bool **arr = (bool**)calloc(n_layers, sizeof(bool*));
 	for (int i = 0; i < n_layers; ++i)
