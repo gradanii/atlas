@@ -1,6 +1,3 @@
-#ifndef BAREML_NEURON_H
-#define BAREML_NEURON_H
-
 #include "engine.h"
 
 bool neuron(uint8_t byte, uint8_t weight, uint8_t threshold)
@@ -58,5 +55,3 @@ bool* predict(bool** inputs, uint8_t n_layers, uint8_t n_neurons)
 	free(arr);
 	return output;
 }
-
-#endif

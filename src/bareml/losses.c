@@ -1,6 +1,3 @@
-#ifndef BAREML_LOSSES_H
-#define BAREML_LOSSES_H
-
 #include "engine.h"
 
 uint8_t cross_entropy(bool** inputs, bool** targets, uint8_t n_neurons, uint8_t n_layers)
@@ -16,5 +13,3 @@ uint8_t cross_entropy(bool** inputs, bool** targets, uint8_t n_neurons, uint8_t 
 
 	return xnor_sum / (n_neurons * n_layers);
 }
-
-#endif
