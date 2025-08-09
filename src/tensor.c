@@ -18,5 +18,5 @@ typedef struct Tensor
 	 Note: This example is for a 2D Tensor.
 
 	 So if i want to access the element '4', with 2D indexing we can do array[1][0] (0th element of 1st array).
-	 We can achieve this 
+	 We can achieve this by taking the same indexes, (1, 0) but this time, to access the first one, it does (i * stride + j).
 */
