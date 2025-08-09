@@ -1,4 +1,4 @@
-C = cc
+C = gcc
 CFLAGS = -Wall -Wextra -Iinclude
 SRC = src/main.c 
 OBJ = $(SRC:.c=.o)

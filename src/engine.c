@@ -1,10 +1,4 @@
-#ifndef BAREML_ENGINE_H
-#define BAREML_ENGINE_H
-
-#include <stdint.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "bareml/engine.h"
 
 uint8_t popcount(uint8_t byte)
 {
@@ -51,5 +45,3 @@ bool activation(uint8_t byte, uint8_t threshold)
 {
 	if (popcount(byte) >= threshold) { return true; } else { return false; }
 }
-
-#endif
