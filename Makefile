@@ -1,8 +1,8 @@
 C = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-SRC = src/main.c 
+SRC = main.c $(shell find src -name '*.c')
 OBJ = $(SRC:.c=.o)
-OUT = bareml
+OUT = atlas
 
 all: $(OUT)
 

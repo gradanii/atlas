@@ -1,5 +1,5 @@
-#ifndef BAREML_ENGINE_H
-#define BAREML_ENGINE_H
+#ifndef ATLAS_ENGINE_H
+#define ATLAS_ENGINE_H
 
 #include <stdint.h>
 #include <stdbool.h>

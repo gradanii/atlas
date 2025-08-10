@@ -1,4 +1,6 @@
-#include "bareml/tensor.h"
+#include "atlas/tensor.h"
+#include <stdint.h>
+#include <stddef.h>
 
 typedef struct Tensor
 {

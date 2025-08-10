@@ -1,5 +1,8 @@
-#ifndef BAREML_TYPING_BINARY_H
-#define BAREML_TYPING_BINARY_H
+#ifndef ATLAS_TYPING_BINARY_H
+#define ATLAS_TYPING_BINARY_H
+
+#include <stdint.h>
+#include <stdbool.h>
 
 uint8_t* binary_1d(uint8_t size, bool* inputs);
 

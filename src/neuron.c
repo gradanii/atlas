@@ -1,4 +1,4 @@
-#include "bareml/engine.h"
+#include "atlas/neuron.h"
 
 bool neuron(uint8_t byte, uint8_t weight, uint8_t threshold)
 {

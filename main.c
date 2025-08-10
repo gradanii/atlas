@@ -1,5 +1,5 @@
-#include "bareml/neuron.c"
-#include "typing/binary.h"
+#include "atlas/neuron.h"
+#include "atlas/typing/binary.h"
 
 int main()
 {
