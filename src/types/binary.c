@@ -1,4 +1,4 @@
-#include "atlas/typing/binary.h"
+#include "atlas/types/binary.h"
 #include "atlas/engine.h"
 #include <stdlib.h>
 #include <string.h>

@@ -7,7 +7,7 @@ uint8_t cross_entropy(bool** inputs, bool** targets, uint8_t n_neurons, uint8_t 
 	{
 		for (int j = 0; j < n_neurons; ++j)
 		{
-			xnor_sum += ~(inputs[i][j] ^ targets[i][j]) & 0x1;
+			xnor_sum += ~(uint8_t)(inputs[i][j] ^ targets[i][j]) & 0x1;
 		}
 	}
 

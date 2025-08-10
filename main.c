@@ -1,5 +1,5 @@
 #include "atlas/neuron.h"
-#include "atlas/typing/binary.h"
+#include "atlas/types/binary.h"
 
 int main()
 {
