@@ -1,5 +1,4 @@
 # Atlas: Inference Engine for Binary Neural Networks
----
 
 [![C/C++ CI](https://github.com/gradanii/atlas/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/gradanii/atlas/actions/workflows/c-cpp.yml)
 
