@@ -7,10 +7,10 @@ OUT = atlas
 all: $(OUT)
 
 $(OUT): $(OBJ)
-	$(CC) $(OBJ) -o $(OUT)
+	$(CC) $(OBJ) -o $(OUT) -lm
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -lm
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ) $(OUT)
