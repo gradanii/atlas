@@ -10,7 +10,7 @@ $(OUT): $(OBJ)
 	$(CC) $(OBJ) -o $(OUT)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -lm
 
 clean:
 	rm -f $(OBJ) $(OUT)
