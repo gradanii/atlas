@@ -6,7 +6,7 @@ int main()
 	uint8_t n_neurons = 3;
 	uint8_t n_layers = 2;
 
-	uint8_t* inputs = random_binary_1d(n_neurons, 42);
+	uint8_t* inputs = random(n_neurons, 42);
 	uint8_t** weights = random_binary_2d(n_layers, n_neurons, 21);
 	uint8_t** thresholds = random_binary_2d(n_layers, n_neurons, 20);
 

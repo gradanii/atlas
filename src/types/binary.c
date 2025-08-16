@@ -9,7 +9,7 @@
 uint8_t* binary_1d(uint8_t size, bool* inputs)
 {
 	int arr_size = (int)ceil(size / 8.0);
-	uint8_t* arr = (uint8_t*)calloc(arr_size, sizeof(uint8_t));
+	uint8_t* arr = calloc(arr_size, sizeof(uint8_t));
 
 	for (int i = 0; i < size; ++i)
 	{
@@ -19,50 +19,34 @@ uint8_t* binary_1d(uint8_t size, bool* inputs)
 	return arr;
 }
 
-uint8_t* random_binary_1d(uint8_t size, unsigned int seed)
+Tensor random(size_t* shape, size_t ndim)
 {
-	srand(seed);
+	srand(time(NULL));
 
-	bool* arr = (bool*)calloc(size, sizeof(bool));
-	for (int i = 0; i < size; ++i)
+	Tensor tensor;
+	tensor.ndim = ndim;
+	tensor.shape = calloc(ndim, sizeof(size_t));
+	memcpy(tensor.shape, shape, ndim * sizeof(size_t));
+
+	size_t size = 1;
+	for (size_t i = 0; i < ndim; ++i)
 	{
-		arr[i] = rand() % 2;
+		size *= shape[i];
 	}
 
-	return binary_1d(size, arr);
-}
-
-uint8_t** binary_2d(uint8_t rows, uint8_t cols, bool inputs[rows][cols])
-{
-	uint8_t** arr = (uint8_t**)calloc(rows, sizeof(uint8_t*));
-	for (int i = 0; i < rows; ++i)
+	bool* data = calloc(size, sizeof(bool));
+	for (size_t i = 0; i < size; ++i)
 	{
-		arr[i] = binary_1d(cols, inputs[i]);
+		data[i] = rand() % 2;
 	}
 
-	return arr;
-}
-
-uint8_t** random_binary_2d(uint8_t rows, uint8_t cols, unsigned int seed)
-{
-	srand(seed);
-
-	bool** arr = (bool**)calloc(rows, sizeof(bool*));
-	for (int i = 0; i < rows; ++i)
+	tensor.data = binary_1d(size, data);
+	tensor.strides = calloc(ndim, sizeof(size_t));
+	tensor.strides[ndim - 1] = 1;
+	for (ssize_t i = ndim - 2; i >= 0; --i)
 	{
-		arr[i] = (bool*)calloc(cols, sizeof(bool));
-		for (int j = 0; j < cols; ++j)
-		{
-			arr[i][j] = rand() % 2;
-		}
+		tensor.strides[i] = tensor.strides[i + 1] * tensor.shape[i + 1];
 	}
 
-	uint8_t** out = (uint8_t**)calloc(rows, sizeof(uint8_t*));
-	for (int i = 0; i < rows; ++i)
-	{
-		out[i] = binary_1d(cols, arr[i]);
-	}
-
-	free(arr);
-	return out;
+	return tensor;
 }

@@ -1,5 +1,5 @@
 C = gcc
-CFLAGS = -Wall -Wextra -Iinclude
+CFLAGS = -std=c99 -Wall -Wextra -Iinclude
 SRC = main.c $(shell find src -name '*.c')
 OBJ = $(SRC:.c=.o)
 OUT = atlas
