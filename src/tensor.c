@@ -92,3 +92,34 @@ Tensor* fill(Tensor* in, uint8_t value)
 
 	return in;
 }
+
+Tensor tensor_like(const Tensor* in)
+{
+	Tensor out;
+
+	out.data = malloc(size(in) * sizeof(uint8_t));
+	out.ndim = a->ndim;
+	out.nbit = a->nbit;
+
+	out.shape = malloc(out.ndim * sizeof(size_t));
+	memcpy(out.shape, a->shape, out.ndim * sizeof(size_t));
+	
+	out.strides = malloc(out.ndim * sizeof(size_t));
+	memcpy(out.strides, a->strides, out.ndim * sizeof(size_t));
+
+	return out;
+}
+
+Tensor zeros_like(const Tensor* in)
+{
+	Tensor out = tensor_like(in);
+	memset(out.data, 0, size(out) * sizeof(uint8_t));
+	return out;
+}
+
+Tensor ones_like(const Tensor* in)
+{
+	Tensor out = tensor_like(in);
+	memset(out.data, 1, size(out) * sizeof(uint8_t));
+	return out; 
+}

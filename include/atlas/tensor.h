@@ -24,6 +24,9 @@ void free(Tensor* in);
 Tensor* copy(const Tensor* src, Tensor* dest);
 Tensor* reshape(Tensor* in, size_t* shape, size_t ndim);
 uint8_t pack(uint8_t value);
-Tensor* fill(Tensor* in, uint8_t value)
+Tensor* fill(Tensor* in, uint8_t value);
+Tensor tensor_like(const Tensor* in);
+Tensor zeros_like(const Tensor* in);
+Tensor ones_like(const Tensor* in);
 
 #endif
