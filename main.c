@@ -6,8 +6,11 @@ int main()
 	uint8_t n_neurons = 3;
 	uint8_t n_layers = 2;
 
-	uint8_t* inputs = random(n_neurons, 42);
-	uint8_t** weights = random_binary_2d(n_layers, n_neurons, 21);
+	size_t wt_shape = {2, 3};
+	size_t i_shape = {3};
+
+	uint8_t* inputs = random(i_shape, 42);
+	uint8_t** weights = random(wt_shape, 21);
 	uint8_t** thresholds = random_binary_2d(n_layers, n_neurons, 20);
 
 	bool** arr = forward(inputs, n_neurons, n_layers, weights, thresholds);

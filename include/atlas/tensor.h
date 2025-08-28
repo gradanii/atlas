@@ -5,13 +5,7 @@
 #include <stdbool.h> 
 #include <stddef.h>
 
-typedef struct Context Context;
-
-typedef struct Backward Backward;
-
 typedef struct Tensor Tensor;
-
-uint8_t get(Tensor* tensor, size_t* indices);
 
 static inline size_t size(const Tensor* a)
 {
@@ -20,8 +14,16 @@ static inline size_t size(const Tensor* a)
 	return size;
 }
 
-Tensor tensor_like(const Tensor* a);
-Tensor zeros_like(const Tensor* a);
-Tensor ones_like(const Tensor* a);
+static inline size_t packed_size(size_t size, size_t nbit)
+{
+	return (int)ceil(size / (int)floor(8.0 / nbit));
+}
+
+Tensor create(size_t ndim, size_t* shape, size_t nbit);
+void free(Tensor* in);
+Tensor* copy(const Tensor* src, Tensor* dest);
+Tensor* reshape(Tensor* in, size_t* shape, size_t ndim);
+uint8_t pack(uint8_t value);
+Tensor* fill(Tensor* in, uint8_t value)
 
 #endif

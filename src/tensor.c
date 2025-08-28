@@ -1,15 +1,5 @@
 #include "atlas/tensor.h"
-
-struct Context
-{
-	uint8_t* ctx_data;
-}
-
-struct Backward
-{
-	Context ctx;
-	void (*backward)(Context* ctx, const Tensor* grad_output);
-}
+#include <assert.h>
 
 struct Tensor
 {
@@ -17,69 +7,88 @@ struct Tensor
 	size_t* shape;
 	size_t* strides;
 	size_t ndim;
-	bool requires_grad;
-	Backward* grad_fn;
+	size_t nbit;
 };
 
-uint8_t get(Tensor* tensor, size_t* indices)
+Tensor create(size_t ndim, size_t* shape, size_t nbit)
 {
-	size_t* strides = tensor->strides;
-	size_t ndim = tensor->ndim;
+	Tensor out;
+	out.ndim = ndim;
+	out.nbit = nbit;
 
-	size_t idx = 0;
-	for (size_t i = 0; i < ndim; ++i)
+	out.shape = malloc(ndim * sizeof(size_t));
+	memcpy(out.shape, shape, ndim * sizeof(size_t));
+
+	out.data = malloc(packed_size(size(out), nbit) * sizeof(uint8_t));
+
+	out.strides = malloc(ndim * sizeof(size_t));
+	out.strides[ndim - 1] = 1;
+	for (ssize_t i = ndim - 2; i >= 0; --i)
 	{
-		idx += indices[i] * strides[i];
+		out.strides[i] = out.strides[i + 1] * out.shape[i + 1];
+	}
+	
+	return out;
+}
+
+void free(Tensor* in)
+{	
+	free(in->data); 
+	free(in->shape);
+	free(in->strides);
+}
+
+Tensor* copy(const Tensor* src, Tensor* dest)
+{
+	assert(src->nbit == dest->nbit);
+	assert(src->ndim == dest->ndim);
+	for (size_t i = 0; i < dest->ndim; i++)
+	{
+		assert(src->shape[i] == dest->shape[i]);
 	}
 
-	return tensor->data[idx];
-}
-static inline size_t size(const Tensor* a)
-{
-	size_t size = 1;
-	for (size_t i = 0; i < a->ndim; i++) { size *= a->shape[i]; }
-	return size;
+	memcpy(dest->data, src->data, size(dest) * sizeof(uint8_t));
+
+	return dest;
 }
 
-Tensor tensor_like(const Tensor* a)
+Tensor* reshape(Tensor* in, size_t* shape, size_t ndim)
 {
-	Tensor out;
+	in->ndim = ndim;
 
-	out.data = malloc(size(a) * sizeof(uint8_t));
-	out.ndim = a->ndim;
+	in->shape = realloc(in->shape, ndim * sizeof(size_t));
+	memcpy(in->shape, shape, ndim * sizeof(size_t));
 
-	out.shape = malloc(out.ndim * sizeof(size_t));
-	memcpy(out.shape, a->shape, out.ndim * sizeof(size_t));
+	in->strides = realloc(in->strides, ndim * sizeof(size_t));
+	in->strides[ndim - 1] = 1;
+	for (ssize_t i = ndim - 2; i >= 0; --i)
+	{
+		in->strides[i] = in->strides[i + 1] * in->shape[i + 1];
+	}
 
-	out.strides = malloc(out.ndim * sizeof(size_t));
-	memcpy(out.strides, a->strides, out.ndim * sizeof(size_t));
-
-	out.requires_grad = a->requires_grad;
-	out.grad_fn = NULL;
-	return out;
+	return in;
 }
 
-Tensor zeros_like(const Tensor* a)
+uint8_t pack(uint8_t value)
 {
-	Tensor out;
+	size_t nbit = 1;
+	while (value >>= 1) {nbit++;}
+	size_t size = (int)floor(8.0 / nbit);
 
-	out.data = calloc(size(a), sizeof(uint8_t));
-	out.ndim = a->ndim;
+	for (size_t i = 0; i < size; i++)
+	{
+		value |= value << (nbit * i);
+	}
 
-	out.shape = malloc(out.ndim * sizeof(size_t));
-	memcpy(out.shape, a->shape, out.ndim * sizeof(size_t));
-
-	out.strides = malloc(out.ndim * sizeof(size_t));
-	memcpy(out.strides, a->strides, out.ndim * sizeof(size_t));
-
-	out.requires_grad = a->requires_grad;
-	out.grad_fn = NULL;
-	return out;
+	return value;
 }
 
-Tensor ones_like(const Tensor* a)
+Tensor* fill(Tensor* in, uint8_t value)
 {
-	Tensor out = tensor_like(a);
-	for (size_t i = 0; i < size(a); i++) { out.data[i] = 1; }
-	return out;
+	for (size_t i = 0; i < size(in); i++)
+	{
+		in->data[i] = pack(value);	
+	}
+
+	return in;
 }
